@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NAчисто — контакты помощи и поддержка</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NAчисто">
+    <meta name="theme-color" content="#3d5a4f">
+    <meta name="description" content="Контакты помощи, AI-чат, счётчик чистоты, база спонсоров. Анонимная поддержка 24/7.">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%233d5a4f'/><text y='0.75em' font-size='55' font-weight='bold' text-anchor='middle' x='50' fill='white'>NA</text></svg>">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk5B0YfQuNGB0YLQviIsCiAgInNob3J0X25hbWUiOiAiTkHQt9C40YHRgtC+IiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmNWYwZWIiLAogICJ0aGVtZV9jb2xvciI6ICIjM2Q1YTRmIiwKICAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCc+PHJlY3Qgd2lkdGg9JzEwMCcgaGVpZ2h0PScxMDAnIHJ4PScyMicgZmlsbD0nJTNkNWU0ZicvPjx0ZXh0IHk9JzAuNzVlbScgZm9udC1zaXplPSc1NScgZm9udC13ZWlnaHQ9J2JvbGQnIHRleHQtYW5jaG9yPSdtaWRkbGUnIHg9JzUwJyBmaWxsPSd3aGl0ZSc+TkE8L3RleHQ+PC9zdmc+IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIn1dfQ==">
+    
+    <style>
+        :root {
+            --bg: #f5f0eb; --card: #ffffff; --text: #2c2416; --subtext: #6b5e4a;
+            --accent: #3d5a4f; --accent-light: #e8f0ec; --warning: #c98b4a;
+            --danger: #e74c3c; --gold: #d4a843; --radius: 20px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06); --nav-bg: rgba(255,255,255,0.95);
+            --font-size: 14px; --font-family: system-ui, -apple-system, sans-serif;
+            --bg-image: none;
+        }
+        .dark-theme {
+            --bg: #1a1a1a; --card: #2d2d2d; --text: #e8e6e1; --subtext: #a0998c;
+            --accent: #7eb8a0; --accent-light: #2a3e35; --shadow: 0 2px 12px rgba(0,0,0,0.3);
+            --nav-bg: rgba(45,45,45,0.95);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg);
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text);
+            line-height: 1.5; -webkit-tap-highlight-color: transparent;
+            padding-bottom: 90px; max-width: 500px; margin: 0 auto;
+            min-height: 100vh; font-size: var(--font-size);
+        }
+        header {
+            padding: 16px 20px 8px; display: flex; justify-content: space-between;
+            align-items: center; position: sticky; top: 0; background: var(--bg);
+            z-index: 10; backdrop-filter: blur(10px);
+        }
+        header h1 { font-size: calc(var(--font-size) * 1.4); font-weight: 700; color: var(--accent); }
+        .header-icons { display: flex; gap: 14px; font-size: calc(var(--font-size) * 1.6); }
+        .header-icons span { cursor: pointer; }
+
+        .sobriety-counter {
+            background: linear-gradient(135deg, var(--card), var(--accent-light));
+            border-radius: var(--radius); padding: 18px; margin: 8px 18px;
+            text-align: center; box-shadow: var(--shadow); cursor: pointer;
+            border: 2px solid var(--accent-light);
+        }
+        .sobriety-counter.jubilee {
+            background: linear-gradient(135deg, #fff9e6, #ffe4b5);
+            border: 3px solid var(--gold); animation: glow 1.5s infinite alternate;
+        }
+        .dark-theme .sobriety-counter.jubilee { background: linear-gradient(135deg, #3a3525, #4a3a20); border-color: #d4a843; }
+        @keyframes glow { from { box-shadow: 0 0 10px rgba(212,168,67,0.3); } to { box-shadow: 0 0 25px rgba(212,168,67,0.7); } }
+        .sobriety-counter .days-big { font-size: calc(var(--font-size) * 3); font-weight: 800; color: var(--accent); line-height: 1; }
+        .sobriety-counter.jubilee .days-big { color: var(--gold); }
+        .sobriety-counter .date-detail { font-size: calc(var(--font-size) * 0.9); color: var(--subtext); margin-top: 4px; }
+        .sobriety-counter .jubilee-badge { display: none; background: var(--gold); color: white; padding: 4px 12px; border-radius: 20px; font-size: calc(var(--font-size) * 0.8); font-weight: 700; margin-top: 6px; }
+        .sobriety-counter.jubilee .jubilee-badge { display: inline-block; }
+
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 18px; }
+        .card { background: var(--card); border-radius: var(--radius); padding: 16px 12px; box-shadow: var(--shadow); cursor: pointer; text-align: center; border: 2px solid transparent; }
+        .card:active { transform: scale(0.97); }
+        .card .icon { font-size: calc(var(--font-size) * 2); }
+        .card .title { font-weight: 600; font-size: calc(var(--font-size) * 0.85); margin-top: 4px; }
+
+        .sos-button { display: block; margin: 0 18px 12px; padding: 14px; background: var(--warning); color: white; border: none; border-radius: 28px; font-size: calc(var(--font-size) * 1); font-weight: 600; text-align: center; cursor: pointer; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--card); width: 90%; max-width: 450px; border-radius: 20px; padding: 20px 18px 36px; max-height: 82vh; overflow-y: auto; position: relative; animation: fadeIn 0.3s ease; margin: 0 auto; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .close-btn { position: absolute; top: 14px; right: 14px; background: var(--accent-light); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: calc(var(--font-size) * 1); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); z-index: 5; }
+
+        .tab-container { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+        .tab-btn { padding: 7px 10px; border: 1px solid #ddd; background: var(--card); border-radius: 14px; font-size: calc(var(--font-size) * 0.8); cursor: pointer; color: var(--text); }
+        .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .chat-container { display: flex; flex-direction: column; height: 50vh; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 8px; background: var(--bg); border-radius: 14px; margin-bottom: 8px; font-size: calc(var(--font-size) * 0.9); }
+        .msg { padding: 10px 14px; border-radius: 16px; margin-bottom: 8px; max-width: 85%; line-height: 1.5; word-wrap: break-word; animation: msgIn 0.3s ease; }
+        @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .msg.user { background: var(--accent); color: white; margin-left: auto; border-bottom-right-radius: 4px; }
+        .msg.ai { background: var(--card); border: 1px solid rgba(0,0,0,0.08); margin-right: auto; border-bottom-left-radius: 4px; }
+        .msg .msg-time { font-size: calc(var(--font-size) * 0.6); opacity: 0.6; margin-top: 4px; text-align: right; }
+        .typing-indicator { font-size: calc(var(--font-size) * 0.8); color: var(--subtext); padding: 6px 12px; display: none; }
+        .typing-indicator.active { display: block; animation: blink 1s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .chat-input-row { display: flex; gap: 6px; }
+        .chat-input-row input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ddd; font-size: calc(var(--font-size) * 0.9); background: var(--bg); color: var(--text); }
+        .chat-input-row button { background: var(--accent); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: calc(var(--font-size) * 1.1); cursor: pointer; }
+
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: calc(var(--font-size) * 0.9); }
+        .toggle { width: 46px; height: 26px; background: #ccc; border-radius: 13px; cursor: pointer; position: relative; transition: background 0.3s; flex-shrink: 0; }
+        .toggle.active { background: var(--accent); }
+        .toggle::after { content: ''; position: absolute; width: 22px; height: 22px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: transform 0.3s; }
+        .toggle.active::after { transform: translateX(20px); }
+        select, input[type="range"], input[type="date"], input[type="color"], input[type="time"], input[type="text"] { padding: 4px 6px; border-radius: 8px; border: 1px solid #ddd; font-size: calc(var(--font-size) * 0.85); background: var(--bg); color: var(--text); }
+
+        .btn-primary { background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 20px; font-weight: 600; width: 100%; cursor: pointer; font-size: calc(var(--font-size) * 0.9); }
+        .btn-danger { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 14px; cursor: pointer; font-size: calc(var(--font-size) * 0.8); }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: var(--nav-bg); display: flex; justify-content: space-around; padding: 6px 0 calc(18px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(0,0,0,0.05); z-index: 20; border-radius: 20px 20px 0 0; }
+        .nav-item { font-size: calc(var(--font-size) * 0.7); text-align: center; color: var(--subtext); cursor: pointer; }
+        .nav-item.active { color: var(--accent); font-weight: 600; }
+        .nav-item .nav-icon { font-size: calc(var(--font-size) * 1.4); display: block; }
+        .contact-card { background: var(--bg); border-radius: 10px; padding: 10px; margin: 5px 0; border-left: 3px solid var(--accent); font-size: calc(var(--font-size) * 0.85); cursor: pointer; }
+        .contact-card:active { background: var(--accent-light); }
+        .delete-link { color: var(--danger); cursor: pointer; font-size: calc(var(--font-size) * 0.8); }
+
+        .jubilee-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #fff9e6, #ffe4b5); border-radius: 24px; padding: 30px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.4); z-index: 300; border: 3px solid var(--gold); display: none; }
+        .dark-theme .jubilee-modal { background: linear-gradient(135deg, #3a3525, #4a3a20); }
+        .jubilee-modal.active { display: block; animation: popIn 0.5s ease; }
+        @keyframes popIn { from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+        .jubilee-modal h2 { font-size: calc(var(--font-size) * 2); color: var(--gold); margin-bottom: 10px; }
+        .jubilee-modal .big-number { font-size: calc(var(--font-size) * 4.3); font-weight: 900; color: var(--accent); }
+        .jubilee-modal p { font-size: calc(var(--font-size) * 1.1); margin: 10px 0; }
+        .jubilee-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 299; display: none; }
+        .jubilee-overlay.active { display: block; }
+        .share-buttons { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+        .share-btn { background: var(--card); border: 1px solid #ddd; border-radius: 12px; padding: 8px 12px; font-size: calc(var(--font-size) * 0.85); cursor: pointer; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 4px; }
+
+        .meditation-box { background: var(--accent-light); border-radius: 16px; padding: 20px; text-align: center; margin: 16px 0; }
+        .meditation-box h3 { font-size: calc(var(--font-size) * 1.3); margin-bottom: 12px; }
+        .meditation-box p { font-size: calc(var(--font-size) * 1); line-height: 1.6; font-style: italic; }
+
+        .install-banner { display: none; position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 14px 28px; border-radius: 30px; font-size: calc(var(--font-size) * 1); font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 50; cursor: pointer; border: none; }
+        .install-banner.show { display: block; animation: fadeInUp 0.3s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @media (display-mode: standalone) { .install-banner { display: none !important; } body { padding-top: env(safe-area-inset-top, 0px); } }
+
+        .detail-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 400; display: none; align-items: center; justify-content: center; }
+        .detail-modal.active { display: flex; }
+        .detail-content { background: var(--card); border-radius: 20px; padding: 24px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: fadeIn 0.3s ease; }
+        .detail-content h3 { font-size: calc(var(--font-size) * 1.3); margin-bottom: 16px; }
+        .detail-row { margin: 8px 0; font-size: calc(var(--font-size) * 1); }
+        .detail-row strong { display: block; font-size: calc(var(--font-size) * 0.8); color: var(--subtext); text-transform: uppercase; }
+        .detail-close { background: var(--danger); color: white; border: none; border-radius: 16px; padding: 8px 16px; margin-top: 12px; cursor: pointer; font-weight: 600; width: 100%; font-size: calc(var(--font-size) * 0.9); }
+
+        .note-card { background: var(--accent-light); border-radius: 12px; padding: 12px; margin: 8px 0; font-size: calc(var(--font-size) * 0.85); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="appTitle">NAчисто</h1>
+    <div class="header-icons">
+        <span onclick="openModal('meditation')" id="meditationIcon">🧘</span>
+        <span onclick="openModal('settings')" id="settingsIcon">⚙️</span>
+    </div>
+</header>
+
+<div class="sobriety-counter" id="counterBox" onclick="openModal('counterSettings')">
+    <div class="days-big" id="cleanDays">0</div>
+    <div class="date-detail" id="dateDetail">нажми для установки даты</div>
+    <div class="jubilee-badge" id="jubileeBadge">🎉 Юбилей!</div>
+</div>
+
+<div class="cards-grid">
+    <div class="card" onclick="openModal('contacts')"><span class="icon">📞</span><span class="title" id="cardContacts">Контакты</span></div>
+    <div class="card" onclick="openModal('sponsor')"><span class="icon">🤝</span><span class="title" id="cardSponsors">Спонсоры</span></div>
+    <div class="card" onclick="openModal('chat')"><span class="icon">🤖</span><span class="title" id="cardChat">AI-Чат</span></div>
+    <div class="card" onclick="openModal('groups')"><span class="icon">🗺️</span><span class="title" id="cardGroups">Собрания</span></div>
+    <div class="card" onclick="openModal('literature')"><span class="icon">📖</span><span class="title" id="cardLit">Литература</span></div>
+    <div class="card" onclick="openModal('notes')"><span class="icon">📝</span><span class="title" id="cardNotes">Заметки</span></div>
+</div>
+
+<button class="sos-button" onclick="openModal('sos')" id="sosButton">🆘 Нужна помощь прямо сейчас</button>
+
+<div class="jubilee-overlay" id="jubileeOverlay" onclick="closeJubilee()"></div>
+<div class="jubilee-modal" id="jubileeModal">
+    <h2 id="jubileeTitle">🎉 Поздравляем!</h2>
+    <div class="big-number" id="jubileeNumber">30</div>
+    <p id="jubileeText">Сегодня 30 дней чистоты!</p>
+    <p style="color:var(--subtext);" id="jubileeDetail"></p>
+    <div class="share-buttons">
+        <a class="share-btn" id="shareTg" target="_blank" href="#">📱 Telegram</a>
+        <a class="share-btn" id="shareWa" target="_blank" href="#">💬 WhatsApp</a>
+        <button class="share-btn" onclick="copyJubilee()" id="copyBtn">📋 Копировать</button>
+    </div>
+    <button class="btn-primary" onclick="closeJubilee()" style="margin-top:12px;" id="thanksBtn">Спасибо! 💪</button>
+</div>
+
+<div class="detail-modal" id="detailModal" onclick="closeDetailModal()">
+    <div class="detail-content" onclick="event.stopPropagation()">
+        <h3 id="detailTitle">Информация</h3>
+        <div id="detailInfo"></div>
+        <button class="detail-close" onclick="closeDetailModal()" id="detailCloseBtn">Закрыть</button>
+    </div>
+</div>
+
+<!-- Заметки -->
+<div class="modal" id="modal-notes">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('notes')">✕</button>
+        <h2 id="notesTitle">📝 Заметки</h2>
+        <textarea id="noteInput" rows="4" placeholder="Напиши заметку..." style="width:100%;padding:10px;border-radius:12px;border:1px solid #ddd;background:var(--bg);color:var(--text);font-family:var(--font-family);font-size:calc(var(--font-size) * 0.9);margin-bottom:8px;"></textarea>
+        <button class="btn-primary" onclick="addNote()" id="addNoteBtn">Добавить заметку</button>
+        <div id="notesList" style="margin-top:12px;"></div>
+    </div>
+</div>
+
+<!-- Медитация -->
+<div class="modal" id="modal-meditation">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('meditation')">✕</button>
+        <h2 id="meditationTitle">🧘 Ежедневная медитация</h2>
+        <div class="meditation-box"><h3 id="medTitle">Утренняя медитация</h3><p id="medText">Загрузка...</p></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="tab-btn active" onclick="showMeditation('morning')" id="medMorningBtn">🌅 Утро</button>
+            <button class="tab-btn" onclick="showMeditation('evening')" id="medEveningBtn">🌙 Вечер</button>
+            <button class="tab-btn" onclick="showMeditation('gratitude')" id="medGratitudeBtn">🙏 Благодарность</button>
+        </div>
+    </div>
+</div>
+
+<!-- Настройки счётчика -->
+<div class="modal" id="modal-counterSettings">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('counterSettings')">✕</button>
+        <h2 id="counterSettingsTitle">📊 Настройка счётчика</h2>
+        <div class="setting-row"><span id="counterDateLabel">Дата начала чистоты</span><input type="date" id="sobrietyDateInput" onchange="saveSobrietyDate()"></div>
+        <div class="setting-row"><span id="counterCleanSince">Чист с</span><strong id="counterStartDate">—</strong></div>
+        <div class="setting-row"><span id="counterTotal">Всего</span><strong id="counterResult">0 дней</strong></div>
+        <div class="setting-row"><span id="counterDetailedLabel">Детально</span><strong id="counterDetailed">—</strong></div>
+        <div class="setting-row"><span id="counterNextJubilee">Следующий юбилей</span><strong id="nextJubilee">—</strong></div>
+        <button class="btn-danger" style="width:100%;margin-top:12px;" onclick="resetCounter()" id="resetCounterBtn">🔄 Сбросить счётчик</button>
+    </div>
+</div>
+
+<!-- AI-Чат -->
+<div class="modal" id="modal-chat">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('chat')">✕</button>
+        <h2 id="chatTitle">🤖 NAчисто AI</h2>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatBox"><div class="msg ai" id="welcomeMsg">Привет! Я NAчисто — твой AI-спутник. Расскажи, как ты сегодня?</div></div>
+            <div class="typing-indicator" id="typingIndicator">NAчисто печатает...</div>
+            <div class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="Напиши сообщение..." onkeydown="if(event.key==='Enter')sendAIMessage()">
+                <button onclick="sendAIMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Группы -->
+<div class="modal" id="modal-groups">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('groups')">✕</button>
+        <h2 id="groupsTitle">🗺️ Собрания</h2>
+        <a id="groupsLink1" href="https://na-russia.org/groups" target="_blank" style="display:block;padding:12px;background:var(--accent-light);border-radius:12px;margin:6px 0;">📋 <span id="groupsText1">Расписание групп</span></a>
+        <a id="groupsLink2" href="https://na-russia.org/online" target="_blank" style="display:block;padding:12px;background:var(--accent-light);border-radius:12px;margin:6px 0;">💻 <span id="groupsText2">Онлайн-собрания</span></a>
+    </div>
+</div>
+
+<!-- Литература -->
+<div class="modal" id="modal-literature">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('literature')">✕</button>
+        <h2 id="litTitle">📖 Литература</h2>
+        <ul style="padding-left:16px;line-height:1.7;font-size:13px;" id="litList"><li>Базовый текст АН</li><li>Белый буклет</li><li>Только сегодня</li><li>12 Шагов и 12 Традиций</li><li>Жить чистыми</li></ul>
+        <a id="litLink1" href="https://na-russia.org/literature" target="_blank" style="display:block;padding:12px;background:var(--accent-light);border-radius:12px;margin-top:6px;">📚 <span id="litText1">Читать онлайн</span></a>
+    </div>
+</div>
+
+<!-- Спонсоры -->
+<div class="modal" id="modal-sponsor">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('sponsor')">✕</button>
+        <h2 id="sponsorTitle">🤝 Спонсоры</h2>
+        <div class="tab-container">
+            <button class="tab-btn active" id="sponsorBaseTab" onclick="switchSponsorTab('base')">База</button>
+            <button class="tab-btn" id="sponsorSearchTab" onclick="switchSponsorTab('search')">Поиск</button>
+            <button class="tab-btn" id="sponsorAddTab" onclick="switchSponsorTab('add')">Стать</button>
+        </div>
+        <div id="sponsor-base-panel"><div id="sponsorBaseList">Загрузка...</div></div>
+        <div id="sponsor-search-panel" style="display:none;">
+            <form onsubmit="submitSponsorRequest(event)">
+                <input type="text" id="spName" placeholder="Имя" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <input type="text" id="spCity" placeholder="Город" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <select id="spGender" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"><option>Не важно</option><option>Мужской</option><option>Женский</option></select>
+                <textarea id="spComment" rows="2" placeholder="Комментарий" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"></textarea>
+                <input type="password" id="spPassword" placeholder="Пароль для удаления" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <button type="submit" class="btn-primary" id="sponsorSubmitBtn">Разместить</button>
+            </form>
+            <div id="sponsorRequestList" style="margin-top:8px;"></div>
+        </div>
+        <div id="sponsor-add-panel" style="display:none;">
+            <form onsubmit="addSponsorToBase(event)">
+                <input type="text" id="spBaseName" placeholder="Имя" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <input type="text" id="spBaseCity" placeholder="Город" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <select id="spBaseGender" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"><option>Мужской</option><option>Женский</option></select>
+                <input type="text" id="spBaseContacts" placeholder="Контакты" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <div style="display:flex;gap:8px;margin:4px 0;"><input type="time" id="spBaseTimeFrom" value="09:00" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"><input type="time" id="spBaseTimeTo" value="21:00" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"></div>
+                <textarea id="spBaseNote" rows="2" placeholder="О себе" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"></textarea>
+                <input type="password" id="spBasePassword" placeholder="Пароль для удаления" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <button type="submit" class="btn-primary" id="sponsorAddBtn">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Контакты -->
+<div class="modal" id="modal-contacts">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('contacts')">✕</button>
+        <h2 id="contactsTitle">📞 Контакты помощи</h2>
+        <div class="tab-container">
+            <button class="tab-btn active" id="helpersTab" onclick="switchContactsTab('helpers')">Помощники</button>
+            <button class="tab-btn" id="addTab" onclick="switchContactsTab('add')">Добавить</button>
+        </div>
+        <div id="helpers-panel"><div id="helpersList">Загрузка...</div></div>
+        <div id="add-panel" style="display:none;">
+            <form onsubmit="addHelperContact(event)">
+                <input type="text" id="helperName" placeholder="Имя" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <input type="text" id="helperCity" placeholder="Город" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <input type="text" id="helperContacts" placeholder="Контакты" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <div style="display:flex;gap:8px;margin:4px 0;"><input type="time" id="helperTimeFrom" value="09:00" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"><input type="time" id="helperTimeTo" value="21:00" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"></div>
+                <textarea id="helperNote" rows="2" placeholder="О себе" style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);"></textarea>
+                <input type="password" id="helperPassword" placeholder="Пароль для удаления" required style="width:100%;padding:8px;margin:4px 0;border-radius:8px;border:1px solid #ddd;background:var(--bg);color:var(--text);">
+                <button type="submit" class="btn-primary" id="helperSubmitBtn">Разместить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SOS -->
+<div class="modal" id="modal-sos">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('sos')">✕</button>
+        <h2 id="sosTitle">🆘 Экстренная помощь</h2>
+        <a id="sosPhone" href="tel:88001014212" style="display:block;padding:14px;background:#e74c3c;color:white;border-radius:14px;text-align:center;font-weight:700;font-size:17px;margin:8px 0;text-decoration:none;">📞 <span id="sosPhoneText">8 (800) 101 42-12</span></a>
+        <a id="sosLink" href="https://na-russia.org/online" target="_blank" style="display:block;padding:14px;background:var(--accent);color:white;border-radius:14px;text-align:center;font-weight:600;text-decoration:none;margin:6px 0;">💻 <span id="sosLinkText">Онлайн-собрание</span></a>
+    </div>
+</div>
+
+<!-- Настройки -->
+<div class="modal" id="modal-settings">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('settings')">✕</button>
+        <h2 id="settingsTitle">⚙️ Настройки</h2>
+        
+        <h3 style="font-size:12px;color:var(--subtext);text-transform:uppercase;" id="settingsInterface">🎨 Интерфейс</h3>
+        <div class="setting-row"><span id="settingsDarkTheme">Тёмная тема</span><div class="toggle" id="darkToggle" onclick="toggleDarkMode()"></div></div>
+        <div class="setting-row"><span id="settingsFontSize">Размер шрифта:</span> <strong id="fontSizeValue">14px</strong><input type="range" min="10" max="24" value="14" oninput="changeFontSize(this.value)" style="width:100px;"></div>
+        <div class="setting-row"><span id="settingsNav">Нижняя панель</span><div class="toggle active" id="navToggle" onclick="toggleNav()"></div></div>
+        
+        <h3 style="font-size:12px;color:var(--subtext);text-transform:uppercase;" id="settingsLang">🌐 Язык</h3>
+        <div class="setting-row">
+            <span id="settingsLangLabel">Язык / Language</span>
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        
+        <h3 style="font-size:12px;color:var(--subtext);text-transform:uppercase;" id="settingsTheme">🎨 Тема и шрифты</h3>
+        <div class="setting-row"><span id="settingsColorScheme">Цветовая схема</span><select id="themeSelect" onchange="changeTheme(this.value)"><option value="default">Зелёный</option><option value="blue">Синий</option><option value="purple">Фиолетовый</option><option value="orange">Оранжевый</option><option value="mono">Монохромный</option><option value="custom">Своя тема</option></select></div>
+        <div id="customThemeRow" style="display:none;">
+            <div class="setting-row"><span id="customAccentLabel">Акцент</span><input type="color" id="customAccent" value="#3d5a4f" onchange="applyCustomTheme()"></div>
+            <div class="setting-row"><span id="customBgLabel">Фон</span><input type="color" id="customBg" value="#f5f0eb" onchange="applyCustomTheme()"></div>
+            <div class="setting-row"><span id="customTextLabel">Цвет текста</span><input type="color" id="customText" value="#2c2416" onchange="applyCustomTheme()"></div>
+        </div>
+        <div class="setting-row"><span id="bgImageLabel">🖼 Фоновое изображение</span></div>
+        <div class="setting-row">
+            <button class="btn-primary" onclick="document.getElementById('bgImageInput').click()" style="width:48%;font-size:11px;">📁 Из галереи</button>
+            <button class="btn-primary" onclick="setBgFromUrl()" style="width:48%;font-size:11px;">🌐 Из интернета</button>
+        </div>
+        <input type="file" id="bgImageInput" accept="image/*" onchange="setBgFromFile(this)" style="display:none;">
+        <div class="setting-row" id="bgImagePreview" style="display:none;"><span id="bgImageName">Нет изображения</span><button class="btn-danger" onclick="removeBgImage()" style="font-size:10px;">✕ Удалить</button></div>
+        <div class="setting-row"><span id="settingsFont">Шрифт</span><select id="fontSelect" onchange="changeFont(this.value)"><option value="system-ui, -apple-system, sans-serif">Системный</option><option value="Georgia, 'Times New Roman', serif">С засечками</option><option value="'Courier New', monospace">Моноширинный</option></select></div>
+        
+        <h3 style="font-size:12px;color:var(--subtext);text-transform:uppercase;" id="settingsAI">🤖 AI</h3>
+        <div class="setting-row"><span id="settingsAILength">Длина ответов</span><select id="aiLength" onchange="changeAILength()"><option value="short">Короткие</option><option value="medium">Средние</option><option value="long">Развёрнутые</option></select></div>
+        <div class="setting-row"><span id="settingsSpeed">Скорость ответа:</span> <strong id="typingSpeedValue">1.2с</strong><input type="range" min="500" max="3000" value="1200" oninput="changeTypingSpeed(this.value)" style="width:100px;"></div>
+        
+        <h3 style="font-size:12px;color:var(--subtext);text-transform:uppercase;" id="settingsData">💾 Данные</h3>
+        <button class="btn-danger" style="width:100%;" onclick="clearAllData()" id="clearDataBtn">🗑 Удалить все данные</button>
+    </div>
+</div>
+
+<div class="bottom-nav" id="bottomNav">
+    <div class="nav-item" onclick="openModal('contacts')"><span class="nav-icon">📞</span><span id="navHelp">Помощь</span></div>
+    <div class="nav-item" onclick="openModal('sponsor')"><span class="nav-icon">🤝</span><span id="navSponsors">Спонсоры</span></div>
+    <div class="nav-item" onclick="openModal('chat')"><span class="nav-icon">🤖</span><span id="navAI">AI</span></div>
+    <div class="nav-item" onclick="openModal('groups')"><span class="nav-icon">🗺️</span><span id="navGroups">Группы</span></div>
+    <div class="nav-item" onclick="openModal('settings')"><span class="nav-icon">⚙️</span><span id="navMore">Ещё</span></div>
+</div>
+
+<button class="install-banner" id="installBanner" onclick="installApp()">📲 Установить NAчисто</button>
+
+<script>
+// ============ НАСТРОЙКИ ============
+let settings = { darkMode:false, fontSize:14, showNav:true, aiLength:'medium', typingSpeed:1200, theme:'default', customAccent:'#3d5a4f', customBg:'#f5f0eb', customText:'#2c2416', fontFamily:'system-ui, -apple-system, sans-serif', bgImage:'', bgImageName:'' };
+let currentLang = localStorage.getItem('nachistoLang') || 'ru';
+
+function loadSettings() { const saved = localStorage.getItem('nachistoSettings'); if (saved) { try { Object.assign(settings, JSON.parse(saved)); } catch(e) {} } currentLang = localStorage.getItem('nachistoLang') || 'ru'; applyAllSettings(); applyLanguage(); }
+function saveSettings() { localStorage.setItem('nachistoSettings', JSON.stringify(settings)); }
+function applyAllSettings() {
+    document.body.classList.toggle('dark-theme', settings.darkMode);
+    document.getElementById('darkToggle')?.classList.toggle('active', settings.darkMode);
+    document.body.style.fontSize = settings.fontSize + 'px';
+    document.documentElement.style.setProperty('--font-size', settings.fontSize + 'px');
+    document.getElementById('fontSizeValue').textContent = settings.fontSize + 'px';
+    document.getElementById('navToggle')?.classList.toggle('active', settings.showNav);
+    document.getElementById('bottomNav').style.display = settings.showNav ? 'flex' : 'none';
+    document.getElementById('aiLength').value = settings.aiLength;
+    document.getElementById('typingSpeedValue').textContent = (settings.typingSpeed/1000).toFixed(1)+'с';
+    document.getElementById('langSelect').value = currentLang;
+    const root=document.documentElement, isDark=settings.darkMode;
+    if (settings.bgImage) { root.style.setProperty('--bg-image', `url(${settings.bgImage})`); } else { root.style.setProperty('--bg-image', 'none'); }
+    if(settings.theme==='custom'){root.style.setProperty('--accent',settings.customAccent);root.style.setProperty('--bg',settings.customBg);root.style.setProperty('--text',settings.customText);root.style.setProperty('--card',isDark?'#2d2d2d':'#ffffff');root.style.setProperty('--accent-light',isDark?'#2a3e35':'#e8f0ec');}
+    else{root.style.removeProperty('--accent');root.style.removeProperty('--bg');root.style.removeProperty('--text');root.style.removeProperty('--card');root.style.removeProperty('--accent-light');applyPresetTheme(settings.theme,isDark);}
+    document.body.style.fontFamily=settings.fontFamily;document.documentElement.style.setProperty('--font-family',settings.fontFamily);
+    document.getElementById('themeSelect').value=settings.theme;document.getElementById('fontSelect').value=settings.fontFamily;
+    document.getElementById('customThemeRow').style.display=settings.theme==='custom'?'':'none';
+    if(settings.theme==='custom'){document.getElementById('customAccent').value=settings.customAccent;document.getElementById('customBg').value=settings.customBg;document.getElementById('customText').value=settings.customText;}
+    if (settings.bgImage) { document.getElementById('bgImagePreview').style.display = ''; document.getElementById('bgImageName').textContent = settings.bgImageName || 'Фоновое изображение'; } else { document.getElementById('bgImagePreview').style.display = 'none'; }
+}
+function applyPresetTheme(theme,isDark){const root=document.documentElement;const themes={default:{accent:'#3d5a4f',bg:'#f5f0eb',text:'#2c2416',subtext:'#6b5e4a',accentLight:'#e8f0ec'},blue:{accent:'#4a7bbf',bg:'#f0f4fa',text:'#1a2a3a',subtext:'#4a5a6a',accentLight:'#e0ecff'},purple:{accent:'#7b5ea7',bg:'#f6f0fa',text:'#2a1a3a',subtext:'#5a4a6a',accentLight:'#ece0ff'},orange:{accent:'#c97b4a',bg:'#faf5f0',text:'#3a2a1a',subtext:'#6a5a4a',accentLight:'#ffe8d0'},mono:{accent:'#555555',bg:'#f0f0f0',text:'#222222',subtext:'#666666',accentLight:'#e0e0e0'}};const t=themes[theme]||themes.default;if(isDark){root.style.setProperty('--accent',t.accent);root.style.setProperty('--bg','#1a1a1a');root.style.setProperty('--card','#2d2d2d');root.style.setProperty('--text','#e8e6e1');root.style.setProperty('--subtext','#a0998c');root.style.setProperty('--accent-light','#2a3e35');}else{root.style.setProperty('--accent',t.accent);root.style.setProperty('--bg',t.bg);root.style.setProperty('--card','#ffffff');root.style.setProperty('--text',t.text);root.style.setProperty('--subtext',t.subtext);root.style.setProperty('--accent-light',t.accentLight);}}
+function setBgFromFile(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){settings.bgImage=e.target.result;settings.bgImageName=file.name;saveSettings();applyAllSettings();};reader.readAsDataURL(file);}
+function setBgFromUrl(){const url=prompt('Введите URL изображения:','https://');if(url&&url.startsWith('http')){const img=new Image();img.onload=function(){settings.bgImage=url;settings.bgImageName='Изображение из интернета';saveSettings();applyAllSettings();};img.onerror=function(){alert('Не удалось загрузить изображение. Проверьте ссылку.');};img.src=url;}else if(url){alert('Введите корректный URL');}}
+function removeBgImage(){settings.bgImage='';settings.bgImageName='';saveSettings();applyAllSettings();}
+function toggleDarkMode(){settings.darkMode=!settings.darkMode;saveSettings();applyAllSettings();}
+function changeFontSize(v){settings.fontSize=parseInt(v);saveSettings();applyAllSettings();}
+function toggleNav(){settings.showNav=!settings.showNav;saveSettings();applyAllSettings();}
+function changeAILength(){settings.aiLength=document.getElementById('aiLength').value;saveSettings();}
+function changeTypingSpeed(v){settings.typingSpeed=parseInt(v);saveSettings();applyAllSettings();}
+function changeTheme(value){settings.theme=value;document.getElementById('customThemeRow').style.display=value==='custom'?'':'none';if(value==='custom')applyCustomTheme();saveSettings();applyAllSettings();}
+function applyCustomTheme(){if(settings.theme==='custom'){settings.customAccent=document.getElementById('customAccent').value;settings.customBg=document.getElementById('customBg').value;settings.customText=document.getElementById('customText').value;saveSettings();applyAllSettings();}}
+function changeFont(value){settings.fontFamily=value;document.body.style.fontFamily=value;document.documentElement.style.setProperty('--font-family',value);saveSettings();}
+
+// ============ ЯЗЫКИ ============
+const translations = {
+    ru: { appTitle:'NAчисто',dateDetail:'нажми для установки даты',jubileeBadge:'🎉 Юбилей!',cardContacts:'Контакты',cardSponsors:'Спонсоры',cardChat:'AI-Чат',cardGroups:'Собрания',cardLit:'Литература',cardNotes:'Заметки',sosButton:'🆘 Нужна помощь прямо сейчас',jubileeTitle:'🎉 Поздравляем!',jubileeText:'{days} дней чистоты!',jubileeDetail:'Это {period} трезвой жизни.',copyBtn:'📋 Копировать',thanksBtn:'Спасибо! 💪',detailTitle:'Информация',detailCloseBtn:'Закрыть',notesTitle:'📝 Заметки',addNoteBtn:'Добавить заметку',notePlaceholder:'Напиши заметку...',settingsLang:'🌐 Язык',settingsLangLabel:'Язык / Language',meditationTitle:'🧘 Ежедневная медитация',medMorning:'🌅 Утро',medEvening:'🌙 Вечер',medGratitude:'🙏 Благодарность',medMorningTitle:'Утренняя медитация',medEveningTitle:'Вечерняя рефлексия',medGratitudeTitle:'Благодарность',medMorningTexts:['Сегодня новый день. Я выбираю оставаться чистым. Только сегодня.','Просыпаясь, я благодарен за ещё один шанс.'],medEveningTexts:['День подходит к концу. Что я сделал хорошо? Я прощаю себя.','Отпуская тревоги дня, я благодарен за чистоту.'],medGratitudeTexts:['Я благодарен за чистоту, поддержку, возможность меняться.','Три вещи, за которые я благодарен сегодня.'],medLoading:'Загрузка...',counterSettingsTitle:'📊 Настройка счётчика',counterDateLabel:'Дата начала чистоты',counterCleanSince:'Чист с',counterTotal:'Всего',counterDays:'дней',counterDetailedLabel:'Детально',counterNextJubilee:'Следующий юбилей',counterNextDays:'через {days} дн. ({total} дней)',resetCounterBtn:'🔄 Сбросить счётчик',chatTitle:'🤖 NAчисто AI',welcomeMsg:'Привет! Я NAчисто — твой AI-спутник. Расскажи, как ты сегодня?',typingIndicator:'NAчисто печатает...',chatPlaceholder:'Напиши сообщение...',groupsTitle:'🗺️ Собрания',groupsText1:'Расписание групп',groupsText2:'Онлайн-собрания',litTitle:'📖 Литература',litList:['Базовый текст АН','Белый буклет','Только сегодня','12 Шагов и 12 Традиций','Жить чистыми'],litText1:'Читать онлайн (Россия)',sponsorTitle:'🤝 Спонсоры',sponsorBaseTab:'База',sponsorSearchTab:'Поиск',sponsorAddTab:'Стать',sponsorBaseEmpty:'База пуста',sponsorSearchEmpty:'Нет запросов',sponsorSubmitBtn:'Разместить',sponsorAddBtn:'Добавить',deleteLink:'🗑 Удалить',contactsTitle:'📞 Контакты помощи',helpersTab:'Помощники',addTab:'Добавить',helpersEmpty:'Нет контактов',helperSubmitBtn:'Разместить',sosTitle:'🆘 Экстренная помощь',sosPhoneText:'8 (800) 101 42-12',sosLinkText:'Онлайн-собрание',settingsTitle:'⚙️ Настройки',settingsInterface:'🎨 Интерфейс',settingsDarkTheme:'Тёмная тема',settingsFontSize:'Размер шрифта:',settingsNav:'Нижняя панель',settingsTheme:'🎨 Тема и шрифты',settingsColorScheme:'Цветовая схема',customAccentLabel:'Акцент',customBgLabel:'Фон',customTextLabel:'Цвет текста',bgImageLabel:'🖼 Фоновое изображение',settingsFont:'Шрифт',settingsAI:'🤖 AI',settingsAILength:'Длина ответов',settingsSpeed:'Скорость ответа:',settingsData:'💾 Данные',clearDataBtn:'🗑 Удалить все данные',navHelp:'Помощь',navSponsors:'Спонсоры',navAI:'AI',navGroups:'Группы',navMore:'Ещё',installBanner:'📲 Установить NAчисто',detailName:'Имя',detailCity:'Город',detailContacts:'Контакты',detailTime:'Время для связи',detailGender:'Пол',detailNote:'Заметка',detailComment:'Комментарий',detailDate:'Добавлен',detailNoData:'Нет данных',noteDelete:'Удалить' },
+    en: { appTitle:'NAclean',dateDetail:'tap to set date',jubileeBadge:'🎉 Jubilee!',cardContacts:'Contacts',cardSponsors:'Sponsors',cardChat:'AI-Chat',cardGroups:'Meetings',cardLit:'Literature',cardNotes:'Notes',sosButton:'🆘 Need help right now',jubileeTitle:'🎉 Congratulations!',jubileeText:'{days} days clean today!',jubileeDetail:'That is {period} of sober life.',copyBtn:'📋 Copy',thanksBtn:'Thank you! 💪',detailTitle:'Information',detailCloseBtn:'Close',notesTitle:'📝 Notes',addNoteBtn:'Add Note',notePlaceholder:'Write a note...',settingsLang:'🌐 Language',settingsLangLabel:'Language',meditationTitle:'🧘 Daily Meditation',medMorning:'🌅 Morning',medEvening:'🌙 Evening',medGratitude:'🙏 Gratitude',medMorningTitle:'Morning Meditation',medEveningTitle:'Evening Reflection',medGratitudeTitle:'Gratitude',medMorningTexts:['Today is a new day. I choose to stay clean. Just for today.','Waking up, I am grateful for another chance.'],medEveningTexts:['The day comes to an end. What did I do well? I forgive myself.','Letting go of the day, I am grateful for staying clean.'],medGratitudeTexts:['I am grateful for recovery, support, and the chance to change.','Three things I am grateful for today.'],medLoading:'Loading...',counterSettingsTitle:'📊 Counter Settings',counterDateLabel:'Clean date',counterCleanSince:'Clean since',counterTotal:'Total',counterDays:'days',counterDetailedLabel:'Details',counterNextJubilee:'Next jubilee',counterNextDays:'in {days} days ({total} days)',resetCounterBtn:'🔄 Reset counter',chatTitle:'🤖 NAclean AI',welcomeMsg:'Hi! I am NAclean — your AI companion. Tell me, how are you today?',typingIndicator:'NAclean is typing...',chatPlaceholder:'Write a message...',groupsTitle:'🗺️ Meetings',groupsText1:'Meeting Schedule',groupsText2:'Online Meetings',litTitle:'📖 Literature',litList:['Basic Text','White Booklet','Just For Today','12 Steps and 12 Traditions','Living Clean'],litText1:'Read online (NA.org)',sponsorTitle:'🤝 Sponsors',sponsorBaseTab:'Base',sponsorSearchTab:'Search',sponsorAddTab:'Become',sponsorBaseEmpty:'Base is empty',sponsorSearchEmpty:'No requests',sponsorSubmitBtn:'Submit',sponsorAddBtn:'Add',deleteLink:'🗑 Delete',contactsTitle:'📞 Help Contacts',helpersTab:'Helpers',addTab:'Add',helpersEmpty:'No contacts',helperSubmitBtn:'Submit',sosTitle:'🆘 Emergency Help',sosPhoneText:'1-800-NA-HELP',sosLinkText:'Online Meeting',settingsTitle:'⚙️ Settings',settingsInterface:'🎨 Interface',settingsDarkTheme:'Dark theme',settingsFontSize:'Font size:',settingsNav:'Bottom panel',settingsTheme:'🎨 Theme & Fonts',settingsColorScheme:'Color scheme',customAccentLabel:'Accent',customBgLabel:'Background',customTextLabel:'Text color',bgImageLabel:'🖼 Background image',settingsFont:'Font',settingsAI:'🤖 AI',settingsAILength:'Answer length',settingsSpeed:'Response speed:',settingsData:'💾 Data',clearDataBtn:'🗑 Delete all data',navHelp:'Help',navSponsors:'Sponsors',navAI:'AI',navGroups:'Groups',navMore:'More',installBanner:'📲 Install NAclean',detailName:'Name',detailCity:'City',detailContacts:'Contacts',detailTime:'Available',detailGender:'Gender',detailNote:'Note',detailComment:'Comment',detailDate:'Added',detailNoData:'No data',noteDelete:'Delete' }
+};
+
+function changeLanguage(lang) { currentLang = lang; localStorage.setItem('nachistoLang', lang); applyLanguage(); document.getElementById('langSelect').value = lang; }
+function applyLanguage() {
+    const t = translations[currentLang];
+    document.getElementById('appTitle').textContent = t.appTitle; document.title = t.appTitle;
+    document.getElementById('dateDetail').textContent = t.dateDetail; document.getElementById('jubileeBadge').textContent = t.jubileeBadge;
+    document.getElementById('cardContacts').textContent = t.cardContacts; document.getElementById('cardSponsors').textContent = t.cardSponsors;
+    document.getElementById('cardChat').textContent = t.cardChat; document.getElementById('cardGroups').textContent = t.cardGroups;
+    document.getElementById('cardLit').textContent = t.cardLit; document.getElementById('cardNotes').textContent = t.cardNotes;
+    document.getElementById('sosButton').textContent = t.sosButton;
+    document.getElementById('jubileeTitle').textContent = t.jubileeTitle; document.getElementById('copyBtn').textContent = t.copyBtn; document.getElementById('thanksBtn').textContent = t.thanksBtn;
+    document.getElementById('detailCloseBtn').textContent = t.detailCloseBtn;
+    document.getElementById('notesTitle').textContent = t.notesTitle; document.getElementById('addNoteBtn').textContent = t.addNoteBtn;
+    document.getElementById('noteInput').placeholder = t.notePlaceholder;
+    document.getElementById('settingsLang').textContent = t.settingsLang; document.getElementById('settingsLangLabel').textContent = t.settingsLangLabel;
+    document.getElementById('meditationTitle').textContent = t.meditationTitle;
+    document.getElementById('medMorningBtn').textContent = t.medMorning; document.getElementById('medEveningBtn').textContent = t.medEvening; document.getElementById('medGratitudeBtn').textContent = t.medGratitude;
+    document.getElementById('counterSettingsTitle').textContent = t.counterSettingsTitle; document.getElementById('counterDateLabel').textContent = t.counterDateLabel;
+    document.getElementById('counterCleanSince').textContent = t.counterCleanSince; document.getElementById('counterTotal').textContent = t.counterTotal;
+    document.getElementById('counterDetailedLabel').textContent = t.counterDetailedLabel; document.getElementById('counterNextJubilee').textContent = t.counterNextJubilee;
+    document.getElementById('resetCounterBtn').textContent = t.resetCounterBtn;
+    document.getElementById('chatTitle').textContent = t.chatTitle; document.getElementById('welcomeMsg').innerHTML = t.welcomeMsg;
+    document.getElementById('typingIndicator').textContent = t.typingIndicator; document.getElementById('chatInput').placeholder = t.chatPlaceholder;
+    document.getElementById('groupsTitle').textContent = t.groupsTitle; document.getElementById('groupsText1').textContent = t.groupsText1; document.getElementById('groupsText2').textContent = t.groupsText2;
+    document.getElementById('groupsLink1').href = currentLang==='ru'?'https://na-russia.org/groups':'https://na.org/?ID=meeting-search';
+    document.getElementById('groupsLink2').href = currentLang==='ru'?'https://na-russia.org/online':'https://na.org/?ID=virtual-meetings';
+    document.getElementById('litTitle').textContent = t.litTitle; document.getElementById('litList').innerHTML = t.litList.map(item => `<li>${item}</li>`).join('');
+    document.getElementById('litText1').textContent = t.litText1; document.getElementById('litLink1').href = currentLang==='ru'?'https://na-russia.org/literature':'https://na.org/?ID=literature';
+    document.getElementById('sponsorTitle').textContent = t.sponsorTitle; document.getElementById('sponsorBaseTab').textContent = t.sponsorBaseTab;
+    document.getElementById('sponsorSearchTab').textContent = t.sponsorSearchTab; document.getElementById('sponsorAddTab').textContent = t.sponsorAddTab;
+    document.getElementById('sponsorSubmitBtn').textContent = t.sponsorSubmitBtn; document.getElementById('sponsorAddBtn').textContent = t.sponsorAddBtn;
+    document.getElementById('contactsTitle').textContent = t.contactsTitle; document.getElementById('helpersTab').textContent = t.helpersTab;
+    document.getElementById('addTab').textContent = t.addTab; document.getElementById('helperSubmitBtn').textContent = t.helperSubmitBtn;
+    document.getElementById('sosTitle').textContent = t.sosTitle; document.getElementById('sosPhoneText').textContent = t.sosPhoneText;
+    document.getElementById('sosPhone').href = currentLang==='ru'?'tel:88001014212':'tel:18006244357';
+    document.getElementById('sosLinkText').textContent = t.sosLinkText; document.getElementById('sosLink').href = currentLang==='ru'?'https://na-russia.org/online':'https://na.org/?ID=virtual-meetings';
+    document.getElementById('settingsTitle').textContent = t.settingsTitle; document.getElementById('settingsInterface').textContent = t.settingsInterface;
+    document.getElementById('settingsDarkTheme').textContent = t.settingsDarkTheme; document.getElementById('settingsFontSize').textContent = t.settingsFontSize;
+    document.getElementById('settingsNav').textContent = t.settingsNav; document.getElementById('settingsTheme').textContent = t.settingsTheme;
+    document.getElementById('settingsColorScheme').textContent = t.settingsColorScheme; document.getElementById('customAccentLabel').textContent = t.customAccentLabel;
+    document.getElementById('customBgLabel').textContent = t.customBgLabel; document.getElementById('customTextLabel').textContent = t.customTextLabel;
+    document.getElementById('bgImageLabel').textContent = t.bgImageLabel; document.getElementById('settingsFont').textContent = t.settingsFont;
+    document.getElementById('settingsAI').textContent = t.settingsAI; document.getElementById('settingsAILength').textContent = t.settingsAILength;
+    document.getElementById('settingsSpeed').textContent = t.settingsSpeed; document.getElementById('settingsData').textContent = t.settingsData;
+    document.getElementById('clearDataBtn').textContent = t.clearDataBtn;
+    document.getElementById('navHelp').textContent = t.navHelp; document.getElementById('navSponsors').textContent = t.navSponsors;
+    document.getElementById('navAI').textContent = t.navAI; document.getElementById('navGroups').textContent = t.navGroups; document.getElementById('navMore').textContent = t.navMore;
+    document.getElementById('installBanner').textContent = t.installBanner;
+    meditations.morning.title = t.medMorningTitle; meditations.morning.texts = t.medMorningTexts;
+    meditations.evening.title = t.medEveningTitle; meditations.evening.texts = t.medEveningTexts;
+    meditations.gratitude.title = t.medGratitudeTitle; meditations.gratitude.texts = t.medGratitudeTexts;
+    loadHelpersList(); loadSponsorBase(); loadSponsorRequests(); loadNotes();
+}
+
+// ============ ЗАМЕТКИ ============
+function addNote() {
+    const input = document.getElementById('noteInput');
+    const text = input.value.trim();
+    if (!text) return;
+    const notes = JSON.parse(localStorage.getItem('nachistoNotes') || '[]');
+    notes.unshift({ text, date: new Date().toLocaleDateString('ru-RU'), time: new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}) });
+    localStorage.setItem('nachistoNotes', JSON.stringify(notes.slice(0, 100)));
+    input.value = '';
+    loadNotes();
+}
+
+function loadNotes() {
+    const notes = JSON.parse(localStorage.getItem('nachistoNotes') || '[]');
+    const c = document.getElementById('notesList');
+    if (!c) return;
+    const t = translations[currentLang];
+    if (notes.length === 0) { c.innerHTML = '<p style="color:var(--subtext);text-align:center;">Нет заметок</p>'; return; }
+    c.innerHTML = notes.map((n, i) => `
+        <div class="note-card">
+            <div style="font-size:calc(var(--font-size) * 0.7);color:var(--subtext);margin-bottom:4px;">${n.date} ${n.time}</div>
+            <div>${escapeHtml(n.text)}</div>
+            <button class="btn-danger" style="margin-top:6px;font-size:10px;padding:4px 8px;" onclick="deleteNote(${i})">${t.noteDelete}</button>
+        </div>
+    `).join('');
+}
+
+function deleteNote(i) {
+    const notes = JSON.parse(localStorage.getItem('nachistoNotes') || '[]');
+    notes.splice(i, 1);
+    localStorage.setItem('nachistoNotes', JSON.stringify(notes));
+    loadNotes();
+}
+
+// ============ ДЕМО-ДАННЫЕ ============
+function initDemoData() {
+    if (!localStorage.getItem('nachistoHelperContacts')) { localStorage.setItem('nachistoHelperContacts', JSON.stringify([{name:'Анна М.',city:'Москва',contacts:'Telegram: @anna_help',timeFrom:'09:00',timeTo:'21:00',note:'3 года в чистоте.',password:'demo123',date:'15.05.2026'},{name:'Сергей К.',city:'СПб',contacts:'Telegram: @sergey_na',timeFrom:'10:00',timeTo:'22:00',note:'5 лет в чистоте.',password:'demo123',date:'10.05.2026'},{name:'Елена Д.',city:'Онлайн',contacts:'Telegram: @elena_12steps',timeFrom:'18:00',timeTo:'23:00',note:'2 года.',password:'demo123',date:'20.05.2026'}])); }
+    if (!localStorage.getItem('nachistoSponsorBase')) { localStorage.setItem('nachistoSponsorBase', JSON.stringify([{name:'Дмитрий В.',city:'Москва',gender:'Мужской',contacts:'Telegram: @dmitry_sponsor',timeFrom:'08:00',timeTo:'20:00',note:'7 лет.',password:'demo123',date:'01.05.2026'},{name:'Марина С.',city:'Екатеринбург',gender:'Женский',contacts:'Telegram: @marina_na',timeFrom:'10:00',timeTo:'21:00',note:'4 года.',password:'demo123',date:'05.05.2026'},{name:'Алексей П.',city:'Онлайн',gender:'Мужской',contacts:'Telegram: @alexey_help',timeFrom:'12:00',timeTo:'23:00',note:'6 лет.',password:'demo123',date:'12.05.2026'}])); }
+    if (!localStorage.getItem('nachistoSponsorRequests')) { localStorage.setItem('nachistoSponsorRequests', JSON.stringify([{name:'Иван Г.',city:'Москва',gender:'Не важно',comment:'Ищу спонсора.',password:'demo123',date:'22.05.2026'}])); }
+}
+
+// ============ СЧЁТЧИК ============
+let jubileeShownToday = localStorage.getItem('nachistoJubileeShown');
+function updateCounter(){const d=localStorage.getItem('nachistoSobrietyDate');const el=document.getElementById('cleanDays'),detail=document.getElementById('dateDetail'),box=document.getElementById('counterBox');if(!d){if(el)el.textContent='0';if(detail)detail.textContent=translations[currentLang].dateDetail;if(box)box.classList.remove('jubilee');return;}const start=new Date(d),today=new Date(),diffDays=Math.floor((today-start)/86400000);let years=today.getFullYear()-start.getFullYear(),months=today.getMonth()-start.getMonth(),days=today.getDate()-start.getDate();if(days<0){months--;days+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}if(months<0){years--;months+=12;}if(years<0){years=0;months=0;days=0;}if(el)el.textContent=diffDays;let dt='';if(years>0)dt+=years+(currentLang==='ru'?' г. ':' yr ');if(months>0)dt+=months+(currentLang==='ru'?' мес. ':' mo ');dt+=days+(currentLang==='ru'?' дн.':' d');if(detail)detail.textContent=dt;const jubilees=[7,14,30,60,90,180,365,545,730,1000,1095,1460,1825,2190,2555,2920,3285,3650];if(box)box.classList.toggle('jubilee',jubilees.includes(diffDays));if(jubilees.includes(diffDays)&&jubileeShownToday!==today.toDateString()){showJubilee(diffDays,years,months,days);}}
+function showJubilee(days,years,months,daysLeft){document.getElementById('jubileeNumber').textContent=days;const t=translations[currentLang];let p='';if(years>0)p+=years+(currentLang==='ru'?' год(а) ':' yr ');if(months>0)p+=months+(currentLang==='ru'?' месяц(а) ':' mo ');p+=daysLeft+(currentLang==='ru'?' дней':' days');document.getElementById('jubileeText').textContent=t.jubileeText.replace('{days}',days);document.getElementById('jubileeDetail').textContent=t.jubileeDetail.replace('{period}',p);const text=encodeURIComponent('🎉 '+days+(currentLang==='ru'?' дней чистоты! ':' days clean! ')+p+(currentLang==='ru'?' #NAчисто':' #NAclean'));document.getElementById('shareTg').href='https://t.me/share/url?url=&text='+text;document.getElementById('shareWa').href='https://wa.me/?text='+text;document.getElementById('jubileeModal').classList.add('active');document.getElementById('jubileeOverlay').classList.add('active');localStorage.setItem('nachistoJubileeShown',new Date().toDateString());}
+function copyJubilee(){navigator.clipboard.writeText(document.getElementById('jubileeText').textContent+' '+document.getElementById('jubileeDetail').textContent+' #'+(currentLang==='ru'?'NAчисто':'NAclean')).then(()=>alert(currentLang==='ru'?'Скопировано!':'Copied!'));}
+function closeJubilee(){document.getElementById('jubileeModal').classList.remove('active');document.getElementById('jubileeOverlay').classList.remove('active');}
+function loadCounterSettings(){const d=localStorage.getItem('nachistoSobrietyDate');if(d)document.getElementById('sobrietyDateInput').value=d;updateCounterDisplay();}
+function saveSobrietyDate(){const v=document.getElementById('sobrietyDateInput').value;if(v){localStorage.setItem('nachistoSobrietyDate',v);updateCounter();updateCounterDisplay();}}
+function updateCounterDisplay(){const d=localStorage.getItem('nachistoSobrietyDate');const t=translations[currentLang];if(!d){document.getElementById('counterStartDate').textContent='—';document.getElementById('counterResult').textContent='0 '+t.counterDays;document.getElementById('counterDetailed').textContent='—';document.getElementById('nextJubilee').textContent='—';return;}const start=new Date(d),today=new Date(),diffDays=Math.floor((today-start)/86400000);let y=today.getFullYear()-start.getFullYear(),m=today.getMonth()-start.getMonth(),dd=today.getDate()-start.getDate();if(dd<0){m--;dd+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}if(m<0){y--;m+=12;}if(y<0){y=0;m=0;dd=0;}document.getElementById('counterStartDate').textContent=start.toLocaleDateString('ru-RU');document.getElementById('counterResult').textContent=diffDays+' '+t.counterDays;document.getElementById('counterDetailed').textContent=y+(currentLang==='ru'?' г. ':' yr ')+m+(currentLang==='ru'?' мес. ':' mo ')+dd+(currentLang==='ru'?' дн.':' d');const jbs=[7,14,30,60,90,180,365,545,730,1000,1095];let next=jbs.find(j=>j>diffDays);document.getElementById('nextJubilee').textContent=next?t.counterNextDays.replace('{days}',next-diffDays).replace('{total}',next):'—';}
+function resetCounter(){if(confirm(currentLang==='ru'?'Сбросить счётчик?':'Reset counter?')){localStorage.removeItem('nachistoSobrietyDate');localStorage.removeItem('nachistoJubileeShown');updateCounter();updateCounterDisplay();}}
+setInterval(updateCounter,60000);
+
+// ============ МЕДИТАЦИЯ ============
+let meditations={morning:{title:'Утренняя медитация',texts:['Сегодня новый день. Я выбираю оставаться чистым. Только сегодня.','Просыпаясь, я благодарен за ещё один шанс.']},evening:{title:'Вечерняя рефлексия',texts:['День подходит к концу. Что я сделал хорошо? Я прощаю себя.','Отпуская тревоги дня, я благодарен за чистоту.']},gratitude:{title:'Благодарность',texts:['Я благодарен за чистоту, поддержку, возможность меняться.','Три вещи, за которые я благодарен сегодня.']}};
+function showMeditation(type){const m=meditations[type];if(!m)return;document.getElementById('medTitle').textContent=m.title;document.getElementById('medText').textContent=m.texts[Math.floor(Math.random()*m.texts.length)];document.querySelectorAll('#modal-meditation .tab-btn').forEach((b,i)=>b.classList.toggle('active',i===['morning','evening','gratitude'].indexOf(type)));}
+
+// ============ AI-ЧАТ ============
+let contextMemory=[],userMood='neutral',conversationStage=0;
+function sendAIMessage(){const input=document.getElementById('chatInput');if(!input)return;const text=input.value.trim();if(!text)return;const box=document.getElementById('chatBox'),time=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});box.innerHTML+=`<div class="msg user">${escapeHtml(text)}<div class="msg-time">${time}</div></div>`;contextMemory.push({role:'user',text});if(contextMemory.length>10)contextMemory.shift();input.value='';box.scrollTop=box.scrollHeight;document.getElementById('typingIndicator').classList.add('active');setTimeout(()=>{const reply=generateHumanReply(text);box.innerHTML+=`<div class="msg ai">${reply}<div class="msg-time">${new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}</div></div>`;contextMemory.push({role:'ai',text:reply});document.getElementById('typingIndicator').classList.remove('active');box.scrollTop=box.scrollHeight;},settings.typingSpeed+Math.random()*800);}
+function generateHumanReply(t){t=t.toLowerCase();conversationStage++;const isEn=currentLang==='en';if(isEn){if(t.match(/craving|relapse|urge|use|drink|drug/))userMood='struggling';else if(t.match(/sad|lonely|fear|anx|depress|pain|cry/))userMood='sad';else if(t.match(/grat|thank|happy|glad|clean|recover|love/))userMood='happy';else if(t.match(/hi|hello|how are|whats up/))userMood='greeting';else userMood='neutral';}else{if(t.match(/тяг|срыв|сорват|употребит|выпит|доз|наркот/))userMood='struggling';else if(t.match(/груст|плохо|один|страх|тревог|депрес|тоск/))userMood='sad';else if(t.match(/благодар|спасиб|рад|хорош|чист|выздоров/))userMood='happy';else if(t.match(/привет|здравств|как дел/))userMood='greeting';else userMood='neutral';}const resp=isEn?{struggling:['I hear you. Cravings are a symptom, not weakness.','I understand. The craving will pass.'],sad:['I am sorry. Tell me more.','Your feelings are normal.'],happy:['That is great! What brought you this joy?','Wonderful! You deserve this.'],greeting:['Hi! How was your day?','Hello! How are you?'],neutral:['Interesting. Tell me more.','I am listening.']}:{struggling:['Я слышу тебя. Тяга — симптом.','Понимаю. Тяга пройдёт.'],sad:['Мне жаль. Расскажи подробнее.','Твои чувства нормальны.'],happy:['Как здорово! Что принесло радость?','Прекрасно! Ты заслуживаешь.'],greeting:['Привет! Как прошёл день?','Здравствуй! Как ты?'],neutral:['Интересно. Расскажи подробнее.','Я слушаю.']};let reply=(resp[userMood]||resp.neutral)[Math.floor(Math.random()*(resp[userMood]||resp.neutral).length)];const followUps=isEn?['What do you think?','Tell me more.']:['Что думаешь?','Расскажи ещё.'];if(Math.random()<0.7&&!reply.endsWith('?'))reply+=' '+followUps[Math.floor(Math.random()*2)];if(settings.aiLength==='short')reply=reply.split('.')[0]+'.';return reply;}
+
+// ============ ДЕТАЛИ / СПОНСОРЫ / КОНТАКТЫ ============
+function openDetailModal(title,data){const t=translations[currentLang];document.getElementById('detailTitle').textContent=title;let h='';if(data.name)h+=`<div class="detail-row"><strong>${t.detailName}</strong> ${escapeHtml(data.name)}</div>`;if(data.city)h+=`<div class="detail-row"><strong>${t.detailCity}</strong> ${escapeHtml(data.city)}</div>`;if(data.contacts)h+=`<div class="detail-row"><strong>${t.detailContacts}</strong> ${escapeHtml(data.contacts)}</div>`;if(data.timeFrom||data.timeTo)h+=`<div class="detail-row"><strong>${t.detailTime}</strong> ${escapeHtml(data.timeFrom||'—')} – ${escapeHtml(data.timeTo||'—')}</div>`;if(data.gender)h+=`<div class="detail-row"><strong>${t.detailGender}</strong> ${escapeHtml(data.gender)}</div>`;if(data.note)h+=`<div class="detail-row"><strong>${t.detailNote}</strong> ${escapeHtml(data.note)}</div>`;if(data.comment)h+=`<div class="detail-row"><strong>${t.detailComment}</strong> ${escapeHtml(data.comment)}</div>`;if(data.date)h+=`<div class="detail-row"><strong>${t.detailDate}</strong> ${escapeHtml(data.date)}</div>`;document.getElementById('detailInfo').innerHTML=h||`<p>${t.detailNoData}</p>`;document.getElementById('detailModal').classList.add('active');}
+function closeDetailModal(){document.getElementById('detailModal').classList.remove('active');}
+function switchSponsorTab(tab){['base','search','add'].forEach(t=>{const p=document.getElementById('sponsor-'+t+'-panel');if(p)p.style.display=t===tab?'block':'none';});document.querySelectorAll('#modal-sponsor .tab-btn').forEach((b,i)=>b.classList.toggle('active',i===['base','search','add'].indexOf(tab)));if(tab==='base')loadSponsorBase();if(tab==='search')loadSponsorRequests();}
+function loadSponsorBase(){const data=JSON.parse(localStorage.getItem('nachistoSponsorBase')||'[]');const c=document.getElementById('sponsorBaseList');if(!c)return;const t=translations[currentLang];c.innerHTML=data.length===0?`<p>${t.sponsorBaseEmpty}</p>`:data.map((s,i)=>`<div class="contact-card" onclick="openDetailModal('${currentLang==='ru'?'Спонсор':'Sponsor'}',{name:'${escapeHtml(s.name)}',city:'${escapeHtml(s.city||'—')}',contacts:'${escapeHtml(s.contacts)}',gender:'${escapeHtml(s.gender||'—')}',timeFrom:'${escapeHtml(s.timeFrom||'')}',timeTo:'${escapeHtml(s.timeTo||'')}',note:'${escapeHtml(s.note||'—')}',date:'${escapeHtml(s.date||'—')}'})"><strong>${escapeHtml(s.name)}</strong> · ${escapeHtml(s.city||'—')}<br>${escapeHtml(s.contacts)}<br><span class="delete-link" onclick="event.stopPropagation();deleteSponsorBase(${i})">${t.deleteLink}</span></div>`).join('');}
+function addSponsorToBase(e){e.preventDefault();const entry={name:document.getElementById('spBaseName').value,city:document.getElementById('spBaseCity').value,gender:document.getElementById('spBaseGender').value,contacts:document.getElementById('spBaseContacts').value,timeFrom:document.getElementById('spBaseTimeFrom').value,timeTo:document.getElementById('spBaseTimeTo').value,note:document.getElementById('spBaseNote').value,password:document.getElementById('spBasePassword').value,date:new Date().toLocaleDateString('ru-RU')};if(!entry.name||!entry.contacts||!entry.password)return alert(currentLang==='ru'?'Заполните поля!':'Fill all fields!');const data=JSON.parse(localStorage.getItem('nachistoSponsorBase')||'[]');data.unshift(entry);localStorage.setItem('nachistoSponsorBase',JSON.stringify(data.slice(0,50)));loadSponsorBase();e.target.reset();}
+function deleteSponsorBase(i){const pw=prompt(currentLang==='ru'?'Пароль:':'Password:');const data=JSON.parse(localStorage.getItem('nachistoSponsorBase')||'[]');if(data[i]?.password===pw){data.splice(i,1);localStorage.setItem('nachistoSponsorBase',JSON.stringify(data));loadSponsorBase();}else alert(currentLang==='ru'?'Неверный пароль':'Wrong password');}
+function submitSponsorRequest(e){e.preventDefault();const entry={name:document.getElementById('spName').value,city:document.getElementById('spCity').value,gender:document.getElementById('spGender').value,comment:document.getElementById('spComment').value,password:document.getElementById('spPassword').value,date:new Date().toLocaleDateString('ru-RU')};if(!entry.name||!entry.password)return alert(currentLang==='ru'?'Заполните поля!':'Fill all fields!');const data=JSON.parse(localStorage.getItem('nachistoSponsorRequests')||'[]');data.unshift(entry);localStorage.setItem('nachistoSponsorRequests',JSON.stringify(data.slice(0,30)));loadSponsorRequests();e.target.reset();}
+function loadSponsorRequests(){const data=JSON.parse(localStorage.getItem('nachistoSponsorRequests')||'[]');const c=document.getElementById('sponsorRequestList');if(!c)return;const t=translations[currentLang];c.innerHTML=data.length===0?`<p>${t.sponsorSearchEmpty}</p>`:data.map((r,i)=>`<div class="contact-card" onclick="openDetailModal('${currentLang==='ru'?'Запрос':'Request'}',{name:'${escapeHtml(r.name)}',city:'${escapeHtml(r.city||'—')}',gender:'${escapeHtml(r.gender||'—')}',comment:'${escapeHtml(r.comment||'—')}',date:'${escapeHtml(r.date||'—')}'})"><strong>${escapeHtml(r.name)}</strong> · ${escapeHtml(r.city||'—')}<br>${escapeHtml(r.comment||'')}<br><span class="delete-link" onclick="event.stopPropagation();deleteSponsorRequest(${i})">${t.deleteLink}</span></div>`).join('');}
+function deleteSponsorRequest(i){const pw=prompt(currentLang==='ru'?'Пароль:':'Password:');const data=JSON.parse(localStorage.getItem('nachistoSponsorRequests')||'[]');if(data[i]?.password===pw){data.splice(i,1);localStorage.setItem('nachistoSponsorRequests',JSON.stringify(data));loadSponsorRequests();}else alert(currentLang==='ru'?'Неверный пароль':'Wrong password');}
+function switchContactsTab(tab){document.getElementById('helpers-panel').style.display=tab==='helpers'?'block':'none';document.getElementById('add-panel').style.display=tab==='add'?'block':'none';if(tab==='helpers')loadHelpersList();}
+function loadHelpersList(){const data=JSON.parse(localStorage.getItem('nachistoHelperContacts')||'[]');const c=document.getElementById('helpersList');if(!c)return;const t=translations[currentLang];c.innerHTML=data.length===0?`<p>${t.helpersEmpty}</p>`:data.map((h,i)=>`<div class="contact-card" onclick="openDetailModal('${currentLang==='ru'?'Контакт':'Contact'}',{name:'${escapeHtml(h.name)}',city:'${escapeHtml(h.city||'—')}',contacts:'${escapeHtml(h.contacts)}',timeFrom:'${escapeHtml(h.timeFrom||'')}',timeTo:'${escapeHtml(h.timeTo||'')}',note:'${escapeHtml(h.note||'—')}',date:'${escapeHtml(h.date||'—')}'})"><strong>${escapeHtml(h.name)}</strong> · ${escapeHtml(h.city||'—')}<br>${escapeHtml(h.contacts)}<br><span class="delete-link" onclick="event.stopPropagation();deleteHelper(${i})">${t.deleteLink}</span></div>`).join('');}
+function addHelperContact(e){e.preventDefault();const entry={name:document.getElementById('helperName').value,city:document.getElementById('helperCity').value,contacts:document.getElementById('helperContacts').value,timeFrom:document.getElementById('helperTimeFrom').value,timeTo:document.getElementById('helperTimeTo').value,note:document.getElementById('helperNote').value,password:document.getElementById('helperPassword').value,date:new Date().toLocaleDateString('ru-RU')};if(!entry.name||!entry.contacts||!entry.password)return alert(currentLang==='ru'?'Заполните поля!':'Fill all fields!');const data=JSON.parse(localStorage.getItem('nachistoHelperContacts')||'[]');data.unshift(entry);localStorage.setItem('nachistoHelperContacts',JSON.stringify(data.slice(0,50)));loadHelpersList();e.target.reset();}
+function deleteHelper(i){const pw=prompt(currentLang==='ru'?'Пароль:':'Password:');const data=JSON.parse(localStorage.getItem('nachistoHelperContacts')||'[]');if(data[i]?.password===pw){data.splice(i,1);localStorage.setItem('nachistoHelperContacts',JSON.stringify(data));loadHelpersList();}else alert(currentLang==='ru'?'Неверный пароль':'Wrong password');}
+function clearAllData(){if(confirm(currentLang==='ru'?'Удалить ВСЕ данные?':'Delete ALL data?')){localStorage.clear();location.reload();}}
+
+// ============ МОДАЛЬНЫЕ ОКНА ============
+function openModal(name){const modal=document.getElementById('modal-'+name);if(modal){modal.classList.add('active');document.body.style.overflow='hidden';}if(name==='sponsor')switchSponsorTab('base');if(name==='contacts')switchContactsTab('helpers');if(name==='notes')loadNotes();if(name==='counterSettings')loadCounterSettings();if(name==='meditation')showMeditation('morning');if(name==='settings')applyAllSettings();document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));const navItems=document.querySelectorAll('.nav-item'),navMap={contacts:0,sponsor:1,chat:2,groups:3,settings:4};if(navMap[name]!==undefined&&navItems[navMap[name]])navItems[navMap[name]].classList.add('active');}
+function closeModal(name){const modal=document.getElementById('modal-'+name);if(modal){modal.classList.remove('active');document.body.style.overflow='';}}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('active');}));
+function escapeHtml(t){return t?t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';}
+
+// ============ PWA ============
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;setTimeout(()=>document.getElementById('installBanner').classList.add('show'),2000);});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');});}else{alert(currentLang==='ru'?'Нажмите "Поделиться" → "На экран Домой"':'Tap "Share" → "Add to Home Screen"');}}
+window.addEventListener('appinstalled',()=>{document.getElementById('installBanner').classList.remove('show');});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{const swCode=`const CACHE='nachisto-v10';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./'])));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{if(res.ok){const clone=res.clone();caches.open(CACHE).then(c=>c.put(e.request,clone));}return res;})));});`;const blob=new Blob([swCode],{type:'application/javascript'});navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});});}
+
+// ============ ЗАПУСК ============
+initDemoData();
+loadSettings();
+updateCounter();
+</script>
+</body>
+</html>
